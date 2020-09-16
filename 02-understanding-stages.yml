@@ -19,11 +19,6 @@ stages:
 - stage : QA
 - stage : Prod
     
--steps:
+steps:
 - script: echo Hello, world!
   displayName: 'Run a one-line script'
-
-- script: |
-    echo Add other tasks to build, test, and deploy your project.
-    echo See https://aka.ms/yaml
-  displayName: 'Run a multi-line script'
