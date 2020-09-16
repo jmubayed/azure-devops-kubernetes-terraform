@@ -19,6 +19,3 @@ stages:
 - stage : QA
 - stage : Prod
     
-steps:
-- script: echo Hello, world!
-  displayName: 'Run a one-line script'
