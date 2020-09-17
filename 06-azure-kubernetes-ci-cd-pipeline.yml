@@ -5,7 +5,9 @@ resources:
 - repo: self
 
 variables:
-  tag: '$(Build.BuildId)'
+  tag: 28
+
+#'$(Build.BuildId)'
 
 stages:
 
@@ -21,18 +23,13 @@ stages:
     pool:
       vmImage: 'ubuntu-latest'
     steps:
-    - task: Docker@2
-      inputs:
-        containerRegistry: 'jmubayed-docker-hub'
-        repository: 'jmubayed/currency-exchange-devops'
-        command: 'buildAndPush'
-        Dockerfile: '**/Dockerfile'
-        tags: '$(tag)'
-    - task: CopyFiles@2
-      inputs:
-        SourceFolder: '$(System.DefaultWorkingDirectory)'
-        Contents: '**/*.yaml'
-        TargetFolder: '$(Build.ArtifactStagingDirectory)'
+    # - task: Docker@2
+    #   inputs:
+    #     containerRegistry: 'jmubayed-docker-hub'
+    #     repository: 'jmubayed/currency-exchange-devops'
+    #     command: 'buildAndPush'
+    #     Dockerfile: '**/Dockerfile'
+    #     tags: '$(tag)'
     - task: PublishBuildArtifacts@1
       inputs:
         PathtoPublish: '$(Build.ArtifactStagingDirectory)'
@@ -57,8 +54,8 @@ stages:
         action: 'deploy'
         kubernetesServiceConnection: 'azure-kubernetes-connection'
         namespace: 'default'
-        manifests: '$(System.ArtifactsDirectory)/configuration/kubernetes/deployment.yaml'
-        containers: 'jmubayed/currency-exchange-devops:$(tag)'
+        manifests: '$(System.ArtifactsDirectory)/deployment.yaml'
+        containers: 'jmubayed/currency-exchange-devops:${tag}'
 # Stage 2
 # Download the K8S Files
 # Deploy to K8S Cluster with Docker Image
